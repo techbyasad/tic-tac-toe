@@ -14,6 +14,32 @@ def printTable(gameTable):
     print(' '+ gameTable[2][0]+' '+'|'+' '+ gameTable[2][1]+' '+'|'' '+ gameTable[2][2]+' ')    
 
 
+def checkWinner(gameTable,player1,player2):
+    if(
+        (gameTable[0][0] == player1 == gameTable[0][1] == gameTable[0][2]) 
+       or (gameTable[1][0] == player1 == gameTable[1][1] == gameTable[1][2])
+       or (gameTable[2][0] == player1 == gameTable[2][1] == gameTable[2][2])
+       or (gameTable[0][0] == player1 == gameTable[1][0] == gameTable[2][0])
+       or (gameTable[0][2] == player1 == gameTable[1][2] == gameTable[2][2])
+       or (gameTable[0][2] == player1 == gameTable[1][1] == gameTable[2][0])
+       or (gameTable[0][0] == player1 == gameTable[1][1] == gameTable[2][2])
+       ):
+            print('Winner is player 1')
+            return player1;
+    elif(
+        (gameTable[0][0] == player2 == gameTable[0][1] == gameTable[0][2]) 
+       or (gameTable[1][0] == player2 == gameTable[1][1] == gameTable[1][2])
+       or (gameTable[2][0] == player2 == gameTable[2][1] == gameTable[2][2])
+       or (gameTable[0][0] == player2 == gameTable[1][0] == gameTable[2][0])
+       or (gameTable[0][2] == player2 == gameTable[1][2] == gameTable[2][2])
+       or (gameTable[0][2] == player2 == gameTable[1][2] == gameTable[2][0])
+       or (gameTable[0][0] == player2 == gameTable[1][2] == gameTable[2][2])
+       ):
+            print('Winner is player 2')
+            return player2
+    return -1;
+
+
 def takeInput(gameTable,playerSign,playerNumber):
     notgoodInput = True
     while(notgoodInput):
@@ -72,7 +98,13 @@ while(playgame == 'yes'):
         output = takeInput(gameTable,whoseTurn,playerNumber)
         if(output == -1):
             gameOn = False
-        printTable(gameTable)
+            break
+        
+        printTable(gameTable)        
+        winner = checkWinner(gameTable,player1,player2)
+        if(winner != -1):
+            gameOn = False
+            break;
         whoseTurn = player2 if(whoseTurn == player1) else player1
         playerNumber = 2 if(playerNumber == 1) else 1
 
